@@ -16,6 +16,10 @@ export default class Connection {
     this.registerDefaultEvents();
   }
 
+  public listen(event: string, cb: (payload: any) => undefined) {
+    this.conn.on(event, cb);
+  }
+
   private usage() {
     console.error('Usage: siocli hostname[:port]');
   }
