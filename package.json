@@ -8,6 +8,9 @@
     "build": "tsc",
     "lint": "tslint --project tsconfig.json"
   },
+  "bin": {
+    "siocli": "./bin/siocli"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@bitbucket.org/akskos/siocli.git"
