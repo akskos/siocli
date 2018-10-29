@@ -8,11 +8,7 @@ const commands = [
     'quit',
 ];
 
-let getSuggestion = (partialInput: string): string | undefined => { return '' };
-let returnFunc = (result: any) => {};
-let inputString = '';
-
-(async function() {
+(async () => {
     while (true) {
         const cmd = await ic.input('> ');
         switch (cmd) {

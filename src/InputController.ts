@@ -3,26 +3,43 @@ import readline from 'readline';
 
 // TODO: would benefit from some refactoring
 export default class InputController {
-    stdin: NodeJS.ReadStream
-    stdout: NodeJS.WriteStream;
-    inputString: string;
-    promptLine: string;
-    returnFunc: (input: string) => void;
-    columnDistance: number;
+    private stdin: NodeJS.ReadStream;
+    private stdout: NodeJS.WriteStream;
+    private inputString: string;
+    private promptLine: string;
+    private returnFunc: (input: string) => void;
+    private columnDistance: number;
 
     constructor() {
         this.stdin = process.stdin;
         this.stdout = process.stdout;
         this.inputString = '';
         this.promptLine = '';
-        keypress(process.stdin); 
+        keypress(process.stdin);
         this.initializeKeypressHandler();
-        this.returnFunc = (asdf: string) => {};
+        this.returnFunc = (asdf: string) => undefined;
         this.columnDistance = 0;
     }
 
+    public async input(prompt: string) {
+        this.inputString = '';
+        this.promptLine = prompt;
+        this.stdout.write(prompt);
+        return new Promise((resolve) => {
+            this.returnFunc = (input: string) => {
+                resolve(input);
+            };
+        });
+    }
+
+    private activateRawStdin() {
+        if (this.stdin.setRawMode) {
+            this.stdin.setRawMode(true);
+        }
+    }
+
     private initializeKeypressHandler = () => {
-        this.stdin.setRawMode && this.stdin.setRawMode(true);
+        this.activateRawStdin();
         this.stdin.on('keypress', (ch, key) => {
             if (key.name === 'return') {
                 this.stdout.write('\n');
@@ -48,19 +65,8 @@ export default class InputController {
                 process.exit();
             }
             readline.clearLine(this.stdout, 0);
-            readline.moveCursor(this.stdout, -this.columnDistance-this.promptLine.length, 0);
+            readline.moveCursor(this.stdout, -this.columnDistance - this.promptLine.length, 0);
             this.stdout.write(`${this.promptLine}${this.inputString}`);
-        });
-    }
-
-    async input(prompt: string) {
-        this.inputString = '';
-        this.promptLine = prompt;
-        this.stdout.write(prompt);
-        return new Promise(resolve => {
-            this.returnFunc = (input: string) => {
-                resolve(input);                        
-            }
         });
     }
 }
