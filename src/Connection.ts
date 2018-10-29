@@ -21,7 +21,7 @@ export default class Connection {
   }
 
   private usage() {
-    console.error('Usage: siocli hostname[:port]');
+    return 'Usage: siocli hostname[:port]';
   }
 
   private registerDefaultEvents() {
