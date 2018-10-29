@@ -16,8 +16,14 @@ export default class Connection {
     this.registerDefaultEvents();
   }
 
-  public listen(event: string, cb: (payload: any) => undefined) {
-    this.conn.on(event, cb);
+  public listen(event: string, cb: (payload: string) => undefined) {
+    if (cb) {
+      this.conn.on(event, cb);
+    } else {
+      this.conn.on(event, (payload: string) => {
+        console.log(payload);
+      });
+    }
   }
 
   public emit(event: string, payload: any) {
