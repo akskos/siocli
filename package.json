@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node --project tsconfig.json src"
+    "start": "ts-node --project tsconfig.json src",
+    "lint": "tslint --project tsconfig.json"
   },
   "repository": {
     "type": "git",
