@@ -20,6 +20,10 @@ export default class Connection {
     this.conn.on(event, cb);
   }
 
+  public emit(event: string, payload: any) {
+    this.conn.emit(event, payload);
+  }
+
   private usage() {
     return 'Usage: siocli hostname[:port]';
   }
