@@ -1,10 +1,11 @@
 import IC from './InputController';
 
 import Connection from './Connection';
+import * as validators from './validators';
 
 const ic = new IC();
 
-const initSocketIOConnection = () => {
+const initSocketIOConnection = (): Connection | undefined => {
   try {
     const url = process.argv[2];
     return new Connection(url);
@@ -16,11 +17,21 @@ const initSocketIOConnection = () => {
 
 (async () => {
   const conn = initSocketIOConnection();
+  if (!conn) {
+    return;
+  }
   while (true) {
-    const cmd = await ic.input('> ');
+    const input = await ic.input('> ');
+    const args = input.split(' ');
+    const cmd = args[0];
+    const event = args[1];
     switch (cmd) {
     case 'emit':
-      console.log('EMIIITT');
+      const payload = args[2];
+      conn.emit(event, payload);
+      break;
+    case 'listen':
+      conn.listen(event);
       break;
     default:
       console.log(`unknown command: ${cmd}`);

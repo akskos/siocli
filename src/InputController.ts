@@ -21,7 +21,7 @@ export default class InputController {
     this.columnDistance = 0;
   }
 
-  public async input(prompt: string) {
+  public input(prompt: string): Promise<string> {
     this.inputString = '';
     this.promptLine = prompt;
     this.stdout.write(prompt);
