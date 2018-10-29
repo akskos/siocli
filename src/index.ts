@@ -4,12 +4,6 @@ import Connection from './Connection';
 
 const ic = new IC();
 
-const commands = [
-  'emit',
-  'listen',
-  'quit',
-];
-
 const initSocketIOConnection = () => {
   try {
     const url = process.argv[2];
