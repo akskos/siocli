@@ -1,5 +1,6 @@
-import io from 'socket.io-client';
 import IC from './InputController';
+
+import Connection from './Connection';
 
 const ic = new IC();
 
@@ -9,31 +10,14 @@ const commands = [
   'quit',
 ];
 
-const quitWithUsage = () => {
-  console.error('Usage: siocli hostname[:port]');
-  process.exit(1);
-};
-
-const registerDefaultEvents = (conn: SocketIOClient.Socket) => {
-  conn.on('error', (error: string) => {
-    console.error(error);
-  });
-  conn.on('connect', () => {
-    console.log('connected successfully');
-  });
-};
-
 const initSocketIOConnection = () => {
-  const host = process.argv[2];
-  if (!host) {
-    quitWithUsage();
+  try {
+    const url = process.argv[2];
+    return new Connection(url);
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
   }
-  if (!host.match(/^(ws:\/\/)?([a-z]+\.)*([a-z]+)(:[0-9]+)?\/?$/i)) {
-    quitWithUsage();
-  }
-  const conn = io(host);
-  registerDefaultEvents(conn);
-  return conn;
 };
 
 (async () => {
