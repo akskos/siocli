@@ -14,6 +14,15 @@ const quitWithUsage = () => {
   process.exit(1);
 };
 
+const registerDefaultEvents = (conn: SocketIOClient.Socket) => {
+  conn.on('error', (error: string) => {
+    console.error(error);
+  });
+  conn.on('connect', () => {
+    console.log('connected successfully');
+  });
+};
+
 const initSocketIOConnection = () => {
   const host = process.argv[2];
   if (!host) {
@@ -22,7 +31,9 @@ const initSocketIOConnection = () => {
   if (!host.match(/^(ws:\/\/)?([a-z]+\.)*([a-z]+)(:[0-9]+)?\/?$/i)) {
     quitWithUsage();
   }
-  return io(host);
+  const conn = io(host);
+  registerDefaultEvents(conn);
+  return conn;
 };
 
 (async () => {
