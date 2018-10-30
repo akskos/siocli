@@ -5,21 +5,16 @@ import * as validators from './validators';
 
 const ic = new IC();
 
-const initSocketIOConnection = (): Connection | undefined => {
-  try {
-    const url = process.argv[2];
-    return new Connection(url);
-  } catch (error) {
-    console.error(error);
-    process.exit(1);
-  }
+const printUsage = () => {
+  console.error('Usage: siocli hostname[:port]');
 };
 
-(async () => {
-  const conn = initSocketIOConnection();
-  if (!conn) {
-    return;
-  }
+const initSocketIOConnection = (): Connection => {
+  const url = process.argv[2];
+  return new Connection(url);
+};
+
+const mainLoop = async (conn: Connection) => {
   while (true) {
     const input = await ic.input('> ');
     const args = input.split(' ');
@@ -38,4 +33,16 @@ const initSocketIOConnection = (): Connection | undefined => {
       break;
     }
   }
-})();
+};
+
+try {
+  const conn = initSocketIOConnection();
+  mainLoop(conn);
+} catch (error) {
+  if (error.message === 'invalid usage') {
+    printUsage();
+  } else {
+    console.error(error);
+  }
+  process.exit(1);
+}

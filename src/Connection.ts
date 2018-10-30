@@ -7,10 +7,10 @@ export default class Connection {
 
   constructor(host: string) {
     if (!host) {
-      throw this.usage();
+      throw new Error('invalid usage');
     }
     if (!host.match(isWSUrl)) {
-      throw this.usage();
+      throw new Error('invalid usage');
     }
     this.conn = io(host);
     this.registerDefaultEvents();
