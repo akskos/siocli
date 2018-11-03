@@ -22,11 +22,21 @@ const mainLoop = async (conn: Connection) => {
     const event = args[1];
     switch (cmd) {
     case 'emit':
-      const payload = args[2];
-      conn.emit(event, payload);
+      const spaceIndex = input.indexOf(' ');
+      const payload = input.substr(spaceIndex);
+      if (spaceIndex === -1 || !payload || payload.length === 0) {
+        console.error('invalid input');
+      } else {
+        console.log('emitting:', payload);
+        conn.emit(event, payload);
+      }
       break;
     case 'listen':
-      conn.listen(event);
+      if (!event) {
+        console.error('invalid input');
+      } else {
+        conn.listen(event);
+      }
       break;
     default:
       console.log(`unknown command: ${cmd}`);
