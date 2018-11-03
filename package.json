@@ -20,6 +20,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/akskos/siocli#readme",
   "dependencies": {
+    "awilix": "^4.0.0",
     "keypress": "^0.2.1",
     "socket.io-client": "^2.1.1",
     "ts-node": "^7.0.1",
