@@ -5,8 +5,6 @@ const printUsage = () => {
   console.error('Usage: siocli hostname[:port]');
 };
 
-debugger;
-
 (async () => {
   try {
     const siocli = container.resolve<Main>('main');
