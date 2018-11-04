@@ -10,10 +10,6 @@ export default class Main {
   }
 
   public async start() {
-    await this.cliUiLoop();
-  }
-
-  private async cliUiLoop() {
     while (true) {
       const input = await this.ic.input('> ');
       if (input.trim().length === 0) {
