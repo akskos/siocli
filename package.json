@@ -21,7 +21,6 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/akskos/siocli#readme",
   "dependencies": {
-    "@types/nconf": "0.0.37",
     "awilix": "~3.0.9",
     "keypress": "^0.2.1",
     "nconf": "^0.10.0",
@@ -31,6 +30,7 @@
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
+    "@types/nconf": "0.0.37",
     "@types/node": "^10.12.1",
     "@types/socket.io-client": "^1.4.32",
     "tslint": "^5.11.0",
