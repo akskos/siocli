@@ -1,5 +1,6 @@
-import awilix from 'awilix';
+import * as awilix from 'awilix';
 import io from 'socket.io-client';
+import CommandParser from './CommandParser';
 
 const container = awilix.createContainer({
   injectionMode: 'CLASSIC',
@@ -10,5 +11,6 @@ function makeSocketIOClient() {
 }
 
 container.register('io', awilix.asFunction(makeSocketIOClient));
+container.register('commandParser', awilix.asClass(CommandParser));
 
 export default container;

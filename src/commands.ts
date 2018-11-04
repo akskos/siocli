@@ -1,13 +1,16 @@
 import SocketIOClient from 'socket.io-client';
 
-export interface Command {
-  execute(payload: any): void;
-}
+import CommandParser from './CommandParser';
+import container from './container';
 
-export class EmitCommand implements Command {
-  constructor(private io: SocketIOClient.Socket) { }
+const io: SocketIOClient.Socket = container.resolve('io');
+const commandParser: CommandParser = container.resolve('commandParser');
 
-  public execute(payload: any) {
-    this.io.emit(payload);
-  }
-}
+const commands = new Map<string, (args: string) => void>();
+commands.set('emit', (args: string) => {
+  const [ event, payload ] = commandParser.parse(args.trim(), '%w %w');
+  console.log(event);
+  console.log(payload);
+});
+
+export default commands;
