@@ -1,18 +1,11 @@
 import io from 'socket.io-client';
 
-const isWSUrl = /^(ws:\/\/)?([a-z]+\.)*([a-z]+)(:[0-9]+)?\/?$/i;
-
 export default class Connection {
   private conn: SocketIOClient.Socket;
 
   constructor(host: string) {
-    if (!host) {
-      throw new Error('invalid usage');
-    }
-    if (!host.match(isWSUrl)) {
-      throw new Error('invalid usage');
-    }
-    this.conn = io(host);
+    const url = this.resolveUrl(host);
+    this.conn = io(url);
     this.registerDefaultEvents();
   }
 
@@ -37,5 +30,20 @@ export default class Connection {
     this.conn.on('connect', () => {
       console.log('connected successfully');
     });
+  }
+
+  private resolveUrl(inputUrl: string) {
+    const isWSUrl = /^(ws:\/\/)([a-z]+\.)*([a-z]+)(:[0-9]+)?\/?$/i;
+    const invalidUsage = new Error('invalid usage');
+    if (!inputUrl) {
+      throw invalidUsage;
+    }
+    if (inputUrl.match(isWSUrl)) {
+      return inputUrl;
+    } else if (`ws://${inputUrl}`.match(isWSUrl)) {
+      return `ws://${inputUrl}`;
+    } else {
+      throw invalidUsage;
+    }
   }
 }
