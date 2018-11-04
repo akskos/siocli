@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node --project tsconfig.json src",
+    "start": "ts-node --project tsconfig.json src --url=localhost:6666",
     "build": "tsc",
     "lint": "tslint --project tsconfig.json",
     "debug": "ts-node --project tsconfig.json --inspect src"
