@@ -1,10 +1,10 @@
 import * as awilix from 'awilix';
-import io from 'socket.io-client';
 import CommandParser from './CommandParser';
 import Config from './Config';
 import InputController from './InputController';
 import Main from './Main';
 import commands from './commands';
+import Connection from './Connection';
 
 const container = awilix.createContainer({
   injectionMode: 'CLASSIC',
@@ -12,7 +12,7 @@ const container = awilix.createContainer({
 
 function makeSocketIOClient() {
   const config = container.resolve<Config>('config');
-  return io(config.url);
+  return new Connection(config.url);
 }
 
 function makeCommands() {
