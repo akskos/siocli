@@ -11,7 +11,8 @@ const container = awilix.createContainer({
 });
 
 function makeSocketIOClient() {
-  return io('localhost:6666');
+  const config = container.resolve<Config>('config');
+  return io(config.url);
 }
 
 function makeCommands() {
