@@ -16,6 +16,9 @@ export default class Main {
   private async cliUiLoop() {
     while (true) {
       const input = await this.ic.input('> ');
+      if (input.trim().length === 0) {
+        continue;
+      }
       const commandName = input.split(' ')[0];
       const spaceIndex = input.indexOf(' ');
       const args = input.slice(spaceIndex);
