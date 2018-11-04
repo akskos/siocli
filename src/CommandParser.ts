@@ -4,7 +4,6 @@ export default class CommandParser {
       throw new Error(`invalid command argument format: ${format}`);
     }
     const fieldFormats = format.split(' ');
-    console.log(fieldFormats);
     return this.parseFields(args, fieldFormats);
   }
 
@@ -13,9 +12,7 @@ export default class CommandParser {
     const parsedFields: any[] = [];
     switch (f) {
     case '%w':
-      console.log('parsing', args);
       const result = this.parseWord(args);
-      console.log('parsed:', result.word);
       parsedFields.push(result.word);
       if (formats.length > 1) {
         parsedFields.concat(this.parseFields(result.args, formats.slice(1)));
@@ -30,8 +27,6 @@ export default class CommandParser {
   private parseWord(args: string): { args: string, word: string } {
     const spaceIndex = args.indexOf(' ');
     const words = args.split(' ').filter((w) => w.length > 0);
-    console.log('words', words);
-    console.log('space index', spaceIndex);
     const restOfArgs = args.slice(spaceIndex);
     return {
       args: restOfArgs,
