@@ -10,7 +10,7 @@ const container = awilix.createContainer({
   injectionMode: 'CLASSIC',
 });
 
-function makeSocketIOClient() {
+function makeConnection() {
   const config = container.resolve<Config>('config');
   return new Connection(config.url);
 }
@@ -19,7 +19,7 @@ function makeCommands() {
   return commands();
 }
 
-container.register('io', awilix.asFunction(makeSocketIOClient));
+container.register('io', awilix.asFunction(makeConnection));
 container.register('commandParser', awilix.asClass(CommandParser));
 container.register('config', awilix.asClass(Config));
 container.register('inputController', awilix.asClass(InputController));
