@@ -7,15 +7,19 @@ export default class CommandParser {
     return this.parseFields(args, fieldFormats);
   }
 
-  private parseFields(args: string, formats: string[]): any[] {
+  private parseFields(args: string | null, formats: string[]): any[] {
+    if (!args) {
+      return [];
+    }
     const f = formats[0];
-    const parsedFields: any[] = [];
+    let parsedFields: any[] = [];
     switch (f) {
     case '%w':
       const result = this.parseWord(args);
+      console.log(result.word);
       parsedFields.push(result.word);
       if (formats.length > 1) {
-        parsedFields.concat(this.parseFields(result.args, formats.slice(1)));
+        parsedFields = parsedFields.concat(this.parseFields(result.args, formats.slice(1)));
       }
       break;
     default:
@@ -24,10 +28,13 @@ export default class CommandParser {
     return parsedFields;
   }
 
-  private parseWord(args: string): { args: string, word: string } {
-    const spaceIndex = args.indexOf(' ');
+  private parseWord(args: string): { args: string | null, word: string } {
     const words = args.split(' ').filter((w) => w.length > 0);
-    const restOfArgs = args.slice(spaceIndex);
+    const spaceIndex = args.indexOf(' ');
+    let restOfArgs = null;
+    if (spaceIndex !== -1) {
+      restOfArgs = args.slice(spaceIndex).trim();
+    }
     return {
       args: restOfArgs,
       word: words[0],
