@@ -1,9 +1,6 @@
 import container from './container';
 import Main from './Main';
-
-const printUsage = () => {
-  console.error('Usage: siocli hostname[:port]');
-};
+import Config from './Config';
 
 (async () => {
   try {
@@ -11,7 +8,7 @@ const printUsage = () => {
     await siocli.start();
   } catch (error) {
     if (error.message === 'invalid usage') {
-      printUsage();
+      container.resolve<Config>('config').printUsage();
     } else {
       console.error(error);
     }
