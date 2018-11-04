@@ -1,5 +1,4 @@
 import Connection from './Connection';
-import * as validators from './validators';
 import { Commands } from './commands';
 import InputController from './InputController';
 import Config from './Config';
