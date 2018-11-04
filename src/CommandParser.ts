@@ -1,3 +1,4 @@
+// TODO: refactor especially parseFields
 export default class CommandParser {
   public parse(args: string, format: string): any[] {
     if (!this.validateFormat(format)) {
