@@ -1,5 +1,3 @@
-import SocketIOClient from 'socket.io-client';
-
 import CommandParser from './CommandParser';
 import container from './container';
 import Connection from './Connection';
