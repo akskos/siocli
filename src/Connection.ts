@@ -30,10 +30,6 @@ export default class Connection {
     this.conn.emit(event, payload);
   }
 
-  private usage() {
-    return 'Usage: siocli hostname[:port]';
-  }
-
   private registerDefaultEvents() {
     this.conn.on('error', (error: string) => {
       console.error(error);
