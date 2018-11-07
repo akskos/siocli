@@ -2,6 +2,10 @@ import keypress from 'keypress';
 import readline from 'readline';
 
 // TODO: would benefit from some refactoring
+// Transform this into InputEmitter that only emits lines entered by user
+// Main listens to its events and calls appropriate functions 
+// Prompt can listen events from both InputEmitter and Main (or Siocli) and 
+// write to stdout with input suggestions
 export default class InputController {
   private stdin: NodeJS.ReadStream;
   private stdout: NodeJS.WriteStream;
