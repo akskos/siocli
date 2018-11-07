@@ -15,16 +15,15 @@ export default class CommandParser {
     const f = formats[0];
     let parsedFields: any[] = [];
     switch (f) {
-    case '%w':
-      const result = this.parseWord(args);
-      console.log(result.word);
-      parsedFields.push(result.word);
-      if (formats.length > 1) {
-        parsedFields = parsedFields.concat(this.parseFields(result.args, formats.slice(1)));
-      }
-      break;
-    default:
-      break;
+      case '%w':
+        const result = this.parseWord(args);
+        parsedFields.push(result.word);
+        if (formats.length > 1)  {
+          parsedFields = parsedFields.concat(this.parseFields(result.args, formats.slice(1)));
+        }
+        break;
+      default:
+        break;
     }
     return parsedFields;
   }
